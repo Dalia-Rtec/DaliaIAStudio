@@ -184,8 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
        5. INTERACTIVE BUDGET CALCULATOR & ESTIMATOR
        ========================================================================== */
     const radioCards = document.querySelectorAll('.radio-card');
-    const planSingle = document.getElementById('planSingle');
-    const planMonthly = document.getElementById('planMonthly');
     const extraExpress = document.getElementById('extraExpress');
     const extraFormat = document.getElementById('extraFormat');
     const btnMinus = document.getElementById('btnMinus');
@@ -200,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const priceDisplay = document.getElementById('priceDisplay');
     const emailCtaLink = document.getElementById('emailCtaLink');
 
-    let basePrice = 850;
+    let basePrice = 850; // default to Cinematic
     let expressPrice = 350;
     let formatPrice = 350;
     let changesRate = 150;
@@ -216,12 +214,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (radioInput) {
                 radioInput.checked = true;
                 const planType = card.getAttribute('data-type');
-                if (planType === 'package') {
-                    basePrice = 3000;
-                    priceDisplay.textContent = "$3,000";
+                if (planType === 'express') {
+                    basePrice = 350;
+                } else if (planType === 'automatizado') {
+                    basePrice = 550;
                 } else {
                     basePrice = 850;
-                    priceDisplay.textContent = "$850";
+                }
+                
+                if (priceDisplay) {
+                    priceDisplay.textContent = `$${basePrice}`;
                 }
                 calculateTotal();
             }
@@ -295,7 +297,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateEmailLink(total, isExpress, isFormat) {
         if (!emailCtaLink) return;
 
-        const planName = basePrice === 3000 ? "Paquete Mensual (4 Videos)" : "Video Único ($850 MXN)";
+        let planName = 'Pro: "Dalia Cinematic" ($850 MXN)';
+        if (basePrice === 350) {
+            planName = 'Básico: "El Express" ($350 MXN)';
+        } else if (basePrice === 550) {
+            planName = 'Intermedio: "El Automatizado" ($550 MXN)';
+        }
+
         const expressText = isExpress ? "Sí (+ $350)" : "No";
         const formatText = isFormat ? "Sí (+ $350)" : "No";
         const changesText = extraChangesCount > 0 ? `${extraChangesCount} rondas (+ $${extraChangesCount * 150})` : "Ninguna";
