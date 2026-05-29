@@ -1965,3 +1965,72 @@ body:hover .cursor-glow {
         height: 420px;
     }
 }
+
+/* ==========================================================================
+   SOCIAL MEDIA ICONS
+   ========================================================================== */
+.hero-socials,
+.footer-socials {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.hero-socials {
+    margin-top: 0;
+    margin-left: 1.5rem;
+}
+
+/* Flex wrap to keep CTA and socials together gracefully */
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-white);
+    background-color: rgba(255, 255, 255, 0.03);
+    transition: var(--transition-smooth);
+}
+
+.social-link svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.social-link:hover {
+    color: var(--color-black);
+    background-color: var(--text-white);
+    border-color: var(--text-white);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.social-link:hover svg {
+    transform: scale(1.12);
+}
+
+/* Responsive hero socials */
+@media (max-width: 768px) {
+    .hero-actions {
+        flex-direction: column;
+        gap: 1.5rem;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .hero-socials {
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+}
