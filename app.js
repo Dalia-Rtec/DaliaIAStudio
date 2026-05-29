@@ -297,11 +297,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateEmailLink(total, isExpress, isFormat) {
         if (!emailCtaLink) return;
 
-        let planName = 'Pro: "Dalia Cinematic" ($850 MXN)';
+        let planName = 'Paquete Pro ($850 MXN)';
         if (basePrice === 350) {
-            planName = 'Básico: "El Express" ($350 MXN)';
+            planName = 'Paquete Básico ($350 MXN)';
         } else if (basePrice === 550) {
-            planName = 'Intermedio: "El Automatizado" ($550 MXN)';
+            planName = 'Paquete Intermedio ($550 MXN)';
         }
 
         const expressText = isExpress ? "Sí (+ $350)" : "No";
