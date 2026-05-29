@@ -184,6 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
        5. INTERACTIVE BUDGET CALCULATOR & ESTIMATOR
        ========================================================================== */
     const radioCards = document.querySelectorAll('.radio-card');
+    const extraVoiceOver = document.getElementById('extraVoiceOver');
     const extraExpress = document.getElementById('extraExpress');
     const extraFormat = document.getElementById('extraFormat');
     const btnMinus = document.getElementById('btnMinus');
@@ -199,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailCtaLink = document.getElementById('emailCtaLink');
 
     let basePrice = 850; // default to Cinematic
+    let voiceOverPrice = 100;
     let expressPrice = 350;
     let formatPrice = 350;
     let changesRate = 150;
@@ -250,6 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Checkboxes change events
+    if (extraVoiceOver) extraVoiceOver.addEventListener('change', calculateTotal);
     if (extraExpress) extraExpress.addEventListener('change', calculateTotal);
     if (extraFormat) extraFormat.addEventListener('change', calculateTotal);
 
@@ -257,6 +260,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function calculateTotal() {
         let extrasSum = 0;
         
+        // Voice Over
+        const isVoiceOver = extraVoiceOver && extraVoiceOver.checked;
+        if (isVoiceOver) {
+            extrasSum += voiceOverPrice;
+        }
+
         // Express delivery
         const isExpress = extraExpress && extraExpress.checked;
         if (isExpress) {
@@ -291,10 +300,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Update Email Subject/Body dynamically
-        updateEmailLink(total, isExpress, isFormat);
+        updateEmailLink(total, isExpress, isFormat, isVoiceOver);
     }
 
-    function updateEmailLink(total, isExpress, isFormat) {
+    function updateEmailLink(total, isExpress, isFormat, isVoiceOver) {
         if (!emailCtaLink) return;
 
         let planName = 'Paquete Pro ($850 MXN)';
@@ -304,6 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
             planName = 'Paquete Intermedio ($550 MXN)';
         }
 
+        const voiceOverText = isVoiceOver ? "Sí (+ $100)" : "No";
         const expressText = isExpress ? "Sí (+ $350)" : "No";
         const formatText = isFormat ? "Sí (+ $350)" : "No";
         const changesText = extraChangesCount > 0 ? `${extraChangesCount} rondas (+ $${extraChangesCount * 150})` : "Ninguna";
@@ -315,6 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `Me interesa contratar sus servicios de producción de video con IA.\n` +
             `He realizado una cotización en su sitio web con el siguiente detalle:\n\n` +
             `- Plan base: ${planName}\n` +
+            `- Voz en off con IA (Hasta 30 palabras): ${voiceOverText}\n` +
             `- Entrega Express (12h): ${expressText}\n` +
             `- Adaptación de formato (9:16 y 16:9): ${formatText}\n` +
             `- Rondas de cambios extra: ${changesText}\n\n` +
